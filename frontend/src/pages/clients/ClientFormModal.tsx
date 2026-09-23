@@ -1112,31 +1112,53 @@ export default function ClientFormModal({
                         </Col>
                       </Row>
 
-                      {(tgBotEnable || showReverseTag) && (
+                      <Row gutter={16}>
+                        <Col xs={24} md={12}>
+                          <Form.Item label="Host Rule Override">
+                            <Select
+                              mode="multiple"
+                              value={clientHostRuleIds || []}
+                              onChange={(v) => methods.setValue('clientHostRuleIds', v)}
+                              options={hostRuleOptions}
+                              placeholder="Default (inbound rule)"
+                              maxTagCount="responsive"
+                              placement="topLeft"
+                              listHeight={220}
+                              allowClear
+                              showSearch={{
+                                filterOption: (input, option) =>
+                                  ((option?.label as string) || '')
+                                    .toLowerCase()
+                                    .includes(input.toLowerCase()),
+                              }}
+                            />
+                          </Form.Item>
+                        </Col>
+                        {showReverseTag && (
+                          <Col xs={24} md={12}>
+                            <FormField name="reverseTag" label={t('pages.clients.reverseTag')}>
+                              <Input placeholder={t('pages.clients.reverseTagPlaceholder')} />
+                            </FormField>
+                          </Col>
+                        )}
+                      </Row>
+
+                      {tgBotEnable && (
                         <Row gutter={16}>
-                          {tgBotEnable && (
-                            <Col xs={24} md={12}>
-                              <FormField
-                                name="tgId"
-                                label={t('pages.clients.telegramId')}
-                                transform={{ output: (v) => Number(v) || 0 }}
-                              >
-                                <InputNumber
-                                  min={0}
-                                  controls={false}
-                                  placeholder={t('pages.clients.telegramIdPlaceholder')}
-                                  style={{ width: '100%' }}
-                                />
-                              </FormField>
-                            </Col>
-                          )}
-                          {showReverseTag && (
-                            <Col xs={24} md={12}>
-                              <FormField name="reverseTag" label={t('pages.clients.reverseTag')}>
-                                <Input placeholder={t('pages.clients.reverseTagPlaceholder')} />
-                              </FormField>
-                            </Col>
-                          )}
+                          <Col xs={24} md={12}>
+                            <FormField
+                              name="tgId"
+                              label={t('pages.clients.telegramId')}
+                              transform={{ output: (v) => Number(v) || 0 }}
+                            >
+                              <InputNumber
+                                min={0}
+                                controls={false}
+                                placeholder={t('pages.clients.telegramIdPlaceholder')}
+                                style={{ width: '100%' }}
+                              />
+                            </FormField>
+                          </Col>
                         </Row>
                       )}
 
@@ -1155,26 +1177,6 @@ export default function ClientFormModal({
                           maxTagCount="responsive"
                           placement="topLeft"
                           listHeight={220}
-                          showSearch={{
-                            filterOption: (input, option) =>
-                              ((option?.label as string) || '')
-                                .toLowerCase()
-                                .includes(input.toLowerCase()),
-                          }}
-                        />
-                      </Form.Item>
-
-                      <Form.Item label="Host Rule Override">
-                        <Select
-                          mode="multiple"
-                          value={clientHostRuleIds || []}
-                          onChange={(v) => methods.setValue('clientHostRuleIds', v)}
-                          options={hostRuleOptions}
-                          placeholder="Default (inbound rule)"
-                          maxTagCount="responsive"
-                          placement="topLeft"
-                          listHeight={220}
-                          allowClear
                           showSearch={{
                             filterOption: (input, option) =>
                               ((option?.label as string) || '')
